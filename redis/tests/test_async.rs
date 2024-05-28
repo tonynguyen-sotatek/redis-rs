@@ -835,7 +835,7 @@ fn test_connection_manager_reconnect_after_delay() {
 #[cfg(feature = "connection-manager")]
 fn test_connection_manager_reconnect_after_delay_with_retry_delay() {
     /// Factor set 10 seconds, but max retry delay set 500 millisecond
-    let retry_strategy_info = redis::aio::RetryStrategyInfo::new()
+    let config = redis::aio::ConnectionConfigInfo::new()
         .factor(10000)
         .max_delay(500);
 
@@ -848,14 +848,12 @@ fn test_connection_manager_reconnect_after_delay_with_retry_delay() {
     let ctx = TestContext::with_tls(tls_files.clone(), false);
     block_on_all(async move {
         let mut manager =
-            redis::aio::ConnectionManager::new_with_backoff_and_timeouts_with_max_delay(
+            redis::aio::ConnectionManager::new_with_backoff_and_timeouts_new_with_config(
                 ctx.client.clone(),
-                retry_strategy_info.clone(),
-                std::time::Duration::MAX,
-                std::time::Duration::MAX,
+                config,
             )
-                .await
-                .unwrap();
+            .await
+            .unwrap();
         let server = ctx.server;
         let addr = server.client_addr().clone();
         drop(server);
@@ -871,7 +869,7 @@ fn test_connection_manager_reconnect_after_delay_with_retry_delay() {
         assert_eq!(result, redis::Value::Okay);
         Ok(())
     })
-        .unwrap();
+    .unwrap();
 }
 
 #[cfg(feature = "tls-rustls")]
