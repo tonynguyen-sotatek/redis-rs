@@ -211,12 +211,13 @@ impl ConnectionManager {
             .factor(factor)
             .number_of_retries(number_of_retries);
 
-        Self::new_with_backoff_and_timeouts_with_max_delay(
+       Self::new_with_backoff_and_timeouts_with_max_delay(
             client,
             retry_strategy_info,
             response_timeout,
             connection_timeout,
         )
+        .await
     }
 
     /// Connect to the server and store the connection inside the returned `ConnectionManager`.
