@@ -486,8 +486,6 @@ impl Client {
     pub async fn get_tokio_connection_manager_with_backoff_and_timeouts_new_with_config(
         &self,
         config: crate::aio::ConnectionConfigInfo,
-        response_timeout: std::time::Duration,
-        connection_timeout: std::time::Duration,
     ) -> RedisResult<crate::aio::ConnectionManager> {
         crate::aio::ConnectionManager::new_with_backoff_and_timeouts_new_with_config(
             self.clone(),
