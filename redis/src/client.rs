@@ -483,17 +483,15 @@ impl Client {
     /// [multiplexed-connection]: aio/struct.MultiplexedConnection.html
     #[cfg(feature = "connection-manager")]
     #[cfg_attr(docsrs, doc(cfg(feature = "connection-manager")))]
-    pub async fn get_tokio_connection_manager_with_backoff_and_timeouts_with_max_delay(
+    pub async fn get_tokio_connection_manager_with_backoff_and_timeouts_new_with_config(
         &self,
-        retry_strategy_info: crate::aio::RetryStrategyInfo,
+        config: crate::aio::ConnectionConfigInfo,
         response_timeout: std::time::Duration,
         connection_timeout: std::time::Duration,
     ) -> RedisResult<crate::aio::ConnectionManager> {
-        crate::aio::ConnectionManager::new_with_backoff_and_timeouts_with_max_delay(
+        crate::aio::ConnectionManager::new_with_backoff_and_timeouts_new_with_config(
             self.clone(),
-            retry_strategy_info,
-            response_timeout,
-            connection_timeout,
+            config,
         )
         .await
     }
