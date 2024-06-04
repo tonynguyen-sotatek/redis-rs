@@ -89,7 +89,6 @@ fn test_block_on_all_panics_from_spawns() {
     });
     assert!(result.is_err());
 }
-
 #[cfg(feature = "async-std-comp")]
 pub fn block_on_all_using_async_std<F>(f: F) -> F::Output
 where
