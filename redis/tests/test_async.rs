@@ -836,8 +836,8 @@ fn test_connection_manager_reconnect_after_delay() {
 fn test_connection_manager_reconnect_after_delay_with_retry_delay() {
     /// Factor set 10 seconds, but max retry delay set 500 millisecond
     let config = redis::aio::ConnectionManagerConfig::new()
-        .factor(10000)
-        .max_delay(500);
+        .set_factor(10000)
+        .set_max_delay(500);
 
     let tempdir = tempfile::Builder::new()
         .prefix("redis")

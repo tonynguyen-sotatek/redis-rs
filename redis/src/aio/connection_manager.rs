@@ -57,37 +57,43 @@ impl ConnectionManagerConfig {
     }
 
     /// Sets the factor
-    pub fn factor(mut self, factor: u64) -> ConnectionManagerConfig {
+    pub fn set_factor(mut self, factor: u64) -> ConnectionManagerConfig {
         self.factor = factor;
         self
     }
 
     /// Sets the max_delay
-    pub fn max_delay(mut self, time: u64) -> ConnectionManagerConfig {
+    pub fn set_max_delay(mut self, time: u64) -> ConnectionManagerConfig {
         self.max_delay = Some(time);
         self
     }
 
     /// Sets the exponent_base
-    pub fn exponent_base(mut self, base: u64) -> ConnectionManagerConfig {
+    pub fn set_exponent_base(mut self, base: u64) -> ConnectionManagerConfig {
         self.exponent_base = base;
         self
     }
 
     /// Sets the number_of_retries
-    pub fn number_of_retries(mut self, amount: usize) -> ConnectionManagerConfig {
+    pub fn set_number_of_retries(mut self, amount: usize) -> ConnectionManagerConfig {
         self.number_of_retries = amount;
         self
     }
 
     /// Sets the response_timeout
-    pub fn response_timeout(mut self, duration: std::time::Duration) -> ConnectionManagerConfig {
+    pub fn set_response_timeout(
+        mut self,
+        duration: std::time::Duration,
+    ) -> ConnectionManagerConfig {
         self.response_timeout = duration;
         self
     }
 
     /// Sets the response_timeout
-    pub fn connection_timeout(mut self, duration: std::time::Duration) -> ConnectionManagerConfig {
+    pub fn set_connection_timeout(
+        mut self,
+        duration: std::time::Duration,
+    ) -> ConnectionManagerConfig {
         self.connection_timeout = duration;
         self
     }
@@ -221,11 +227,11 @@ impl ConnectionManager {
         connection_timeout: std::time::Duration,
     ) -> RedisResult<Self> {
         let config = ConnectionManagerConfig::new()
-            .exponent_base(exponent_base)
-            .factor(factor)
-            .number_of_retries(number_of_retries)
-            .response_timeout(response_timeout)
-            .connection_timeout(connection_timeout);
+            .set_exponent_base(exponent_base)
+            .set_factor(factor)
+            .set_number_of_retries(number_of_retries)
+            .set_response_timeout(response_timeout)
+            .set_connection_timeout(connection_timeout);
 
         Self::new_with_config(client, config).await
     }
